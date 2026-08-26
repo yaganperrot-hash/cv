@@ -6,7 +6,8 @@ data/
 cv-reels/
 *.pdf
 *.docx
-!templates/*.docx          # exception : un éventuel reference.docx de mise en page
+# Exception : un éventuel reference.docx de mise en page pandoc
+!templates/*.docx
 
 # Artefacts générés (conversion pandoc, rapports de check)
 dist/
