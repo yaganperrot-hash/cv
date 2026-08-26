@@ -15,17 +15,19 @@
    `cv_checker/` (parseur Markdown, chargeur de config validant, moteur de
    règles, rendu de rapport) + CLI `check_cv.py`.
 4. **Template** : `templates/cv-template.md`, alternante IT fictive, passe 8/8.
-5. **Tests** : 50 tests pytest — CV conforme, CV incomplet, formats, config
-   invalide, codes de sortie, rapports.
+5. **Tests** : 51 tests pytest — CV conforme (le template), CV incomplet et CV
+   « presque bon » (`cv-partiel.md` : téléphone, e-learning et formule de
+   disponibilité manquants), formats, config invalide, codes de sortie, rapports.
 6. **CI** : `.github/workflows/check-cv.yml` — check, pytest, pandoc → `.docx`,
    artefacts `cv-docx` et `cv-report`.
 
 ## Vérifications passées en local
 
 ```
-pytest                                            → 50 passed
+pytest                                            → 51 passed
 python check_cv.py templates/cv-template.md       → 8/8, exit 0
 python check_cv.py tests/fixtures/cv-incomplet.md → 1/8, exit 1
+python check_cv.py tests/fixtures/cv-partiel.md   → 5/8, exit 1
 ```
 
 ## Décisions prises (et pourquoi)
@@ -44,6 +46,9 @@ python check_cv.py tests/fixtures/cv-incomplet.md → 1/8, exit 1
   « Expérience ». Les alias sont listés dans `config.yml`.
 - **Sections avec `min_words`** : une section `## Formation` vide ne doit pas
   suffire à valider le champ.
+- **Les CV de test fictifs vivent dans `tests/fixtures/`, pas dans `data/`.**
+  `data/` est ignoré par git : un CV qu'on veut voir couvert par la suite de
+  tests doit être versionné, et il ne peut l'être que s'il est fictif.
 - **`if: always()` sur l'artefact rapport** : il sert surtout quand le check échoue.
 - **Le rythme d'alternance est cherché dans tout le document**, pas dans une
   section imposée : certains le mettent en en-tête, d'autres dans `## Alternance`.
