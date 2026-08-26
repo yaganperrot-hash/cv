@@ -82,8 +82,13 @@ def test_email_format_is_validated(line, expected, config):
         ("06.12.34.56.78", True),
         ("+33 6 12 34 56 78", True),
         ("0612345678", True),
+        ("+44 7911 123456", True),
+        ("+1 555 123 4567", True),
+        ("+49 170 1234567", True),
+        ("+352 621 123 456", True),
         ("06 12 34 56", False),
         ("2025 promotion 12345", False),
+        ("+0 123 456", False),
     ],
 )
 def test_phone_format_is_validated(line, expected, config):

@@ -6,10 +6,8 @@ data/
 cv-reels/
 *.pdf
 *.docx
-# Exception : un éventuel reference.docx de mise en page pandoc
-!templates/*.docx
 
-# Artefacts générés par pandoc (jamais versionnés : ils se régénèrent)
+# Artefacts de build
 dist/
 build/
 

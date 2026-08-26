@@ -1,7 +1,8 @@
-"""Rendu du rapport : console lisible + artefact Markdown/texte."""
+"""Rendu du rapport : console lisible + artefact Markdown/texte/JSON."""
 
 from __future__ import annotations
 
+import json
 import os
 import sys
 from datetime import date
@@ -151,6 +152,57 @@ def render_markdown(report: Report) -> str:
     else:
         lines += ["", "Tous les champs minimum sont présents.", ""]
     return "\n".join(lines).rstrip() + "\n"
+
+
+def render_json(report: Report) -> str:
+    """Rendu JSON pour intégration avec un tableau de bord."""
+    data = {
+        "source": report.source,
+        "date": date.today().isoformat(),
+        "ok": report.ok,
+        "present_count": report.present_count,
+        "total_count": len(report.results),
+        "fields": [_field_to_dict(r) for r in report.results],
+    }
+    return json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+
+
+def _field_to_dict(result: FieldResult) -> dict:
+    d: dict = {
+        "id": result.id,
+        "label": result.label,
+        "ok": result.ok,
+        "required": result.required,
+    }
+    if result.ok:
+        d["evidence"] = result.evidence
+    else:
+        d["detail"] = result.detail
+        if result.help:
+            d["help"] = result.help
+    if result.sub_results:
+        d["sub_results"] = [{"id": s.id, "label": s.label, "ok": s.ok} for s in result.sub_results]
+    return d
+
+
+def render_json_batch(reports: list[Report]) -> str:
+    """Rendu JSON pour un lot de CV."""
+    data = {
+        "date": date.today().isoformat(),
+        "total_cvs": len(reports),
+        "ok_count": sum(1 for r in reports if r.ok),
+        "reports": [
+            {
+                "source": r.source,
+                "ok": r.ok,
+                "present_count": r.present_count,
+                "total_count": len(r.results),
+                "fields": [_field_to_dict(f) for f in r.results],
+            }
+            for r in reports
+        ],
+    }
+    return json.dumps(data, ensure_ascii=False, indent=2) + "\n"
 
 
 def render_text(report: Report) -> str:

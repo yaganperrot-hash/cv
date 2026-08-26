@@ -1,6 +1,6 @@
 # Rapport de vérification du CV
 
-- **Source** : `tests/fixtures/cv-incomplet.md`
+- **Source** : `tests\fixtures\cv-incomplet.md`
 - **Date** : 2026-08-26
 - **Statut** : ❌ incomplet
 - **Champs présents** : 1/8
@@ -31,7 +31,7 @@
 ### Téléphone
 
 - introuvable ou format invalide
-- **Aide** : Ajoute un numéro de téléphone français valide (formats acceptés : `06 12 34 56 78`, `06.12.34.56.78`, `+33 6 12 34 56 78`).
+- **Aide** : Ajoute un numéro de téléphone valide (formats acceptés : `06 12 34 56 78`, `+33 6 12 34 56 78`, `+44 7911 123456`, `+1 555 123 4567`).
 
 ### Section Formation
 

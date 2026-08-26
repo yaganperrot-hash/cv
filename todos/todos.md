@@ -3,36 +3,32 @@
 > Convention : une ligne = une todo. Format `- [ ] (P1) TODO-000 — description`.
 > Priorités : P1 (bloquant), P2 (important), P3 (confort).
 > Une todo terminée part dans `todos/archive/YYYY-MM-DD-titre.md`.
-> Dernière mise à jour : 2026-08-26 (fin de session).
+> Dernière mise à jour : 2026-08-26.
 
 ## En cours
 
-_(rien — la branche `setup` attend sa relecture)_
+_(rien)_
 
 ## À faire
 
-- [ ] (P1) TODO-001 — Vérifier le premier run du workflow `check-cv` dans
-      l'onglet *Actions* : la conversion pandoc n'a jamais tourné en local
-      (pandoc absent de la machine de dev). Le push est fait, la CI a donc
-      démarré.
-- [ ] (P3) TODO-008 — Tester la *forme* du rendu console (bloc d'aide replié,
-      flèche uniquement sur la première ligne) : BUG-002 est passé entre les
-      mailles parce que les tests ne vérifiaient que la présence des libellés.
-- [ ] (P2) TODO-002 — TASK-001 : mise en forme du `.docx` via
-      `--reference-doc=templates/reference.docx`, sans casser la lisibilité ATS.
-- [ ] (P2) TODO-003 — TASK-002 : accepter un dossier de CV (`python check_cv.py
-      data/`) avec un récapitulatif en fin d'exécution.
-- [ ] (P3) TODO-004 — Ajouter ruff (lint + format) au projet et à la CI.
-- [ ] (P3) TODO-005 — Étendre la validation du téléphone aux numéros
-      internationaux si des alternants hors France arrivent.
-- [ ] (P3) TODO-006 — Ajouter un `--json` à la CLI pour brancher un tableau de
-      bord côté école.
+- [ ] (P1) TODO-009 — Tester le pipeline GitLab CI au premier push sur le
+      GitLab auto-hébergé. Vérifier que le commentaire se poste sur le commit.
 
 ## Bloquées
 
 - [ ] (P1) TODO-007 — Merger la PR `setup` → `main`. **Bloquée** : relecture
       humaine explicitement demandée, aucun merge automatique.
       https://github.com/yaganperrot-hash/cv/pull/new/setup
+
+## Terminées (à archiver)
+
+- [x] TODO-001 — CI GitHub Actions vérifiée (5 runs success).
+- [x] TODO-002 — Supprimée (pandoc retiré, le .docx sera fait par l'étudiant).
+- [x] TODO-008 — Tests du rendu console ajoutés (7 tests).
+- [x] TODO-004 — ruff ajouté (lint + format + CI).
+- [x] TODO-005 — Téléphones internationaux supportés.
+- [x] TODO-006 — `--json` ajouté à la CLI.
+- [x] TODO-003 — TASK-002 : mode batch (dossier + multi-fichiers).
 
 ## Questions ouvertes
 

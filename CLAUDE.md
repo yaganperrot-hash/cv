@@ -7,9 +7,8 @@
 
 Vérificateur de CV pour des étudiants en alternance IT. Le CV est écrit en
 **Markdown** (versionnable, diffable) ; un script Python vérifie qu'il contient
-les informations minimum attendues, et une CI GitHub Actions rejoue ce contrôle
-à chaque push / pull request avant de générer une version `.docx` ATS-friendly
-via pandoc.
+les informations minimum attendues, et une CI (GitHub Actions + GitLab CI)
+rejoue ce contrôle à chaque push / pull request.
 
 Le script sort en **code 0** si tout est présent, **1** s'il manque un champ
 requis (la CI passe au rouge), **2** en cas d'erreur d'exécution.
@@ -27,8 +26,8 @@ validé), sections Formation / Expérience / Compétences, rythme d'alternance
 | Tests | pytest (`pytest` à la racine, config dans `pyproject.toml`) |
 | Config | `config.yml` — **source de vérité des champs attendus** |
 | Format CV | Markdown, sections en titres `##` |
-| Export | pandoc, Markdown → `.docx` (fait en CI) |
-| CI | `.github/workflows/check-cv.yml` (push + pull_request) |
+| CI | `.github/workflows/check-cv.yml` + `.gitlab-ci.yml` |
+| Sujet | `tasks/TASK-003-sujet-pro-intg.md` — énoncé distribué aux étudiants |
 
 Règles de code :
 
@@ -48,7 +47,7 @@ check_cv.py            lanceur CLI
 cv_checker/config.py   lecture + validation de config.yml
 cv_checker/document.py parseur Markdown (titres, sections)
 cv_checker/checker.py  moteur de règles -> Report
-cv_checker/report.py   rendu console + artefact .md/.txt
+cv_checker/report.py   rendu console + artefact .md/.txt/.json
 cv_checker/text.py     normalisation (minuscules, accents)
 ```
 
@@ -68,7 +67,9 @@ sessions/              mémoire de travail entre sessions
 todos/                 travail à faire
 tasks/                 spécifications de lots de travail
 bugs/                  bugs ouverts et résolus
-.github/workflows/     CI
+.github/workflows/     CI GitHub Actions
+.gitlab-ci.yml         CI GitLab
+ci/                    scripts helpers pour la CI GitLab
 ```
 
 ### Où ranger quoi
@@ -139,8 +140,9 @@ pip install -r requirements.txt
 
 python check_cv.py templates/cv-template.md              # vérifie le template
 python check_cv.py data/mon-cv.md --report reports/cv.md # vérifie + artefact
+python check_cv.py data/                                  # vérifie un dossier
+python check_cv.py templates/cv-template.md --json        # sortie JSON
 pytest                                                    # suite de tests
-pandoc templates/cv-template.md -o dist/cv.docx --standalone  # export .docx
 
 # Régénérer les rapports versionnés des CV fictifs
 for cv in templates/cv-template.md tests/fixtures/*.md; do
