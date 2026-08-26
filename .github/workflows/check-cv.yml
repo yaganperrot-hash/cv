@@ -37,7 +37,7 @@ jobs:
       - name: Vérification des champs minimum
         run: |
           python check_cv.py "$CV_PATH" --config config.yml \
-            --report reports/cv-report.md --no-color
+            --report "reports/$(basename "${CV_PATH%.md}")-report.md" --no-color
 
       - name: Tests (pytest)
         run: pytest
@@ -70,5 +70,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cv-report
-          path: reports/cv-report.md
+          path: reports/*-report.md
           if-no-files-found: warn

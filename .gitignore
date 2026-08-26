@@ -9,12 +9,12 @@ cv-reels/
 # Exception : un éventuel reference.docx de mise en page pandoc
 !templates/*.docx
 
-# Artefacts générés (conversion pandoc, rapports de check)
+# Artefacts générés par pandoc (jamais versionnés : ils se régénèrent)
 dist/
 build/
-reports/
-*.report.md
-*.report.txt
+
+# `reports/` EST versionné : les rapports des CV fictifs servent de trace
+# lisible en pull request. Voir CLAUDE.md § 3.
 
 # Python
 __pycache__/
