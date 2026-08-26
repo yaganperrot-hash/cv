@@ -1,6 +1,6 @@
 # Rapport de vérification du CV
 
-- **Source** : `templates/cv-template.md`
+- **Source** : `templates\cv-template.md`
 - **Date** : 2026-08-26
 - **Statut** : ✅ conforme
 - **Champs présents** : 8/8

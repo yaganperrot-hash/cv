@@ -1,3 +1,11 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "SIM", "UP"]
+ignore = ["DTZ011"]
+
 [tool.pytest.ini_options]
 # `pythonpath` permet d'importer `cv_checker` sans installation ni bidouille
 # de sys.path dans les tests.

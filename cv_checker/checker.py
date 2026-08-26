@@ -214,18 +214,29 @@ def _check_regex(
     text, scope_error = _haystack(spec, document, sections)
     if scope_error:
         return FieldResult(
-            id=spec.id, label=spec.label, ok=False, required=spec.required,
-            detail=scope_error, help=spec.help,
+            id=spec.id,
+            label=spec.label,
+            ok=False,
+            required=spec.required,
+            detail=scope_error,
+            help=spec.help,
         )
     assert spec.pattern is not None
     match = _search(spec, spec.pattern, text)
     if match is None:
         return FieldResult(
-            id=spec.id, label=spec.label, ok=False, required=spec.required,
-            detail="introuvable ou format invalide", help=spec.help,
+            id=spec.id,
+            label=spec.label,
+            ok=False,
+            required=spec.required,
+            detail="introuvable ou format invalide",
+            help=spec.help,
         )
     return FieldResult(
-        id=spec.id, label=spec.label, ok=True, required=spec.required,
+        id=spec.id,
+        label=spec.label,
+        ok=True,
+        required=spec.required,
         evidence=_evidence(text, match, spec.normalize),
     )
 
@@ -242,12 +253,20 @@ def _check_all_of(
     missing = [s for s in subs if not s.ok]
     if not missing:
         return FieldResult(
-            id=spec.id, label=spec.label, ok=True, required=spec.required,
+            id=spec.id,
+            label=spec.label,
+            ok=True,
+            required=spec.required,
             evidence=f"{len(subs)}/{len(subs)} mentions attendues trouvées",
             sub_results=tuple(subs),
         )
     detail = scope_error or "mention(s) manquante(s) : " + ", ".join(s.label for s in missing)
     return FieldResult(
-        id=spec.id, label=spec.label, ok=False, required=spec.required,
-        detail=detail, help=spec.help, sub_results=tuple(subs),
+        id=spec.id,
+        label=spec.label,
+        ok=False,
+        required=spec.required,
+        detail=detail,
+        help=spec.help,
+        sub_results=tuple(subs),
     )
