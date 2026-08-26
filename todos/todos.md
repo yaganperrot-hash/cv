@@ -12,11 +12,7 @@ _(rien)_
 ## À faire
 
 - [ ] (P1) TODO-009 — Tester le pipeline GitLab CI au premier push sur le
-      GitLab auto-hébergé. Vérifier que le commentaire se poste sur le commit
-      et que le `.docx` est téléchargeable en artefact.
-- [ ] (P2) TODO-002 — TASK-001 : mise en forme du `.docx` via
-      `--reference-doc=templates/reference.docx`, sans casser la lisibilité ATS.
-      **Bloquée** : pandoc absent de la machine de dev.
+      GitLab auto-hébergé. Vérifier que le commentaire se poste sur le commit.
 
 ## Bloquées
 
@@ -27,6 +23,7 @@ _(rien)_
 ## Terminées (à archiver)
 
 - [x] TODO-001 — CI GitHub Actions vérifiée (5 runs success).
+- [x] TODO-002 — Supprimée (pandoc retiré, le .docx sera fait par l'étudiant).
 - [x] TODO-008 — Tests du rendu console ajoutés (7 tests).
 - [x] TODO-004 — ruff ajouté (lint + format + CI).
 - [x] TODO-005 — Téléphones internationaux supportés.

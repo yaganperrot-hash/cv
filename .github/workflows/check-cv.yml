@@ -8,14 +8,12 @@ on:
   workflow_dispatch:
 
 env:
-  # CV vérifié et converti. Un étudiant qui versionne son propre CV
-  # (fictif ou personnel, dans SON dépôt) change cette valeur.
   CV_PATH: templates/cv-template.md
   PYTHON_VERSION: "3.12"
 
 jobs:
   check:
-    name: Champs minimum, tests et export .docx
+    name: Champs minimum et tests
     runs-on: ubuntu-latest
 
     steps:
@@ -47,30 +45,7 @@ jobs:
       - name: Tests (pytest)
         run: pytest
 
-      - name: Installation de pandoc
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends pandoc
-
-      - name: Conversion Markdown -> .docx (ATS-friendly)
-        run: |
-          mkdir -p dist
-          pandoc "$CV_PATH" \
-            --from=markdown \
-            --to=docx \
-            --standalone \
-            --output="dist/$(basename "${CV_PATH%.md}").docx"
-          ls -lh dist
-
-      - name: Publication du .docx
-        uses: actions/upload-artifact@v4
-        with:
-          name: cv-docx
-          path: dist/*.docx
-          if-no-files-found: error
-
       - name: Publication du rapport de vérification
-        # `always()` : le rapport est justement le plus utile quand le check échoue.
         if: always()
         uses: actions/upload-artifact@v4
         with:

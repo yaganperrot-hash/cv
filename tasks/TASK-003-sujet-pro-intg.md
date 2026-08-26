@@ -13,7 +13,7 @@
 | Correction | Validation automatique (CI GitLab)               |
 | Durée      | 14 jours                                         |
 | Effectif   | Projet individuel                                |
-| Outils     | Markdown / Git / pandoc                          |
+| Outils     | Markdown / Git                                   |
 
 ---
 
@@ -24,10 +24,8 @@ Ce projet vous apprendra à :
 - **Rédiger un CV structuré** au format Markdown, versionnable et diffable.
 - **Utiliser Git** dans un workflow professionnel (clone, commit, push).
 - **Lire et comprendre un retour de CI** pour corriger vos erreurs en autonomie.
-- **Produire un document exploitable** : le CV validé est automatiquement
-  converti en `.docx` prêt à envoyer à un recruteur.
 
-À la fin du module, vous aurez un CV à jour, vérifié, et exportable — un outil
+À la fin du module, vous aurez un CV Markdown à jour et vérifié — un outil
 concret pour votre recherche d'alternance.
 
 ---
@@ -40,7 +38,6 @@ un pipeline CI :
 1. **Détecte** votre fichier `.md` à la racine du dépôt.
 2. **Vérifie** qu'il contient les 8 champs obligatoires (voir ci-dessous).
 3. **Poste un commentaire** sur votre commit avec le rapport de vérification.
-4. **Génère un `.docx`** téléchargeable si tout est valide.
 
 Votre travail : écrire le CV, pousser, lire le retour, corriger, repousser —
 jusqu'à ce que le pipeline passe **au vert**.
@@ -144,12 +141,6 @@ manque et comment le corriger. Modifiez votre CV, committez, poussez à nouveau.
 
 Répétez jusqu'au **pipeline vert** (8/8 champs validés).
 
-### 5. Récupérer le `.docx`
-
-Une fois le pipeline vert, allez dans **CI/CD → Pipelines → votre pipeline →
-stage `build`** et téléchargez l'artefact `.docx`. C'est votre CV prêt à
-envoyer.
-
 ---
 
 ## Structure recommandée
@@ -213,7 +204,7 @@ condition de validation du module.
 
 - Toucher au code Python (`check_cv.py`, `cv_checker/`).
 - Modifier `config.yml`.
-- Installer quoi que ce soit en dehors de Git et pandoc.
+- Installer quoi que ce soit en dehors de Git.
 - Rédiger en HTML, PDF ou Word — uniquement du Markdown.
 
 ---
@@ -224,9 +215,6 @@ condition de validation du module.
 # Vérifier votre CV en local avant de pousser
 pip install pyyaml
 python check_cv.py mon-cv.md
-
-# Générer le .docx en local (optionnel, nécessite pandoc)
-pandoc mon-cv.md -o mon-cv.docx --standalone
 
 # Workflow Git classique
 git add mon-cv.md
