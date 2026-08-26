@@ -11,10 +11,10 @@ _(rien — la branche `setup` attend sa relecture)_
 
 ## À faire
 
-- [ ] (P1) TODO-001 — Pousser sur GitHub et vérifier le premier run du workflow
-      `check-cv` : la conversion pandoc n'a jamais tourné (pandoc absent de la
-      machine de dev). **Bloquée sur l'URL du dépôt distant** : aucun remote
-      n'est configuré et `gh` n'est pas installé sur la machine.
+- [ ] (P1) TODO-001 — Vérifier le premier run du workflow `check-cv` dans
+      l'onglet *Actions* : la conversion pandoc n'a jamais tourné en local
+      (pandoc absent de la machine de dev). Le push est fait, la CI a donc
+      démarré.
 - [ ] (P3) TODO-008 — Tester la *forme* du rendu console (bloc d'aide replié,
       flèche uniquement sur la première ligne) : BUG-002 est passé entre les
       mailles parce que les tests ne vérifiaient que la présence des libellés.
@@ -30,8 +30,9 @@ _(rien — la branche `setup` attend sa relecture)_
 
 ## Bloquées
 
-- [ ] (P1) TODO-007 — Merger `setup` dans `main`. **Bloquée** : relecture
+- [ ] (P1) TODO-007 — Merger la PR `setup` → `main`. **Bloquée** : relecture
       humaine explicitement demandée, aucun merge automatique.
+      https://github.com/yaganperrot-hash/cv/pull/new/setup
 
 ## Questions ouvertes
 

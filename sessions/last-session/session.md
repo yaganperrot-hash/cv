@@ -1,6 +1,7 @@
 # Session du 2026-08-26 — Mise en place du dépôt et du vérificateur de CV
 
-- **Branche** : `setup` (branchée sur `main`, **non mergée** — relecture humaine attendue)
+- **Branche** : `setup` (branchée sur `main`, poussée sur `origin`, **non mergée**
+  — relecture humaine attendue)
 - **Point de départ** : dossier vide, aucun dépôt git
 - **État à l'arrivée** : ✅ tout est vert en local
 
@@ -67,21 +68,21 @@ Rapports régénérés dans `reports/` après ces exécutions.
 - **La conversion pandoc n'a pas pu être testée en local** (pandoc absent de la
   machine). La commande et le workflow sont écrits mais leur premier vrai
   passage aura lieu au premier push GitHub. → TODO-001.
-- **Rien n'a été poussé** : le dépôt n'a aucun remote et `gh` n'est pas installé
-  sur la machine. Les 15 commits n'existent qu'en local, sur `setup`. Dès que
-  l'URL du dépôt distant est connue :
-  `git remote add origin <url> && git push -u origin main setup`.
-- Le workflow n'a donc jamais tourné.
+- **Poussé sur `git@github.com:yaganperrot-hash/cv.git`** (remote `origin`) :
+  `main` (commit initial vide) et `setup` (16 commits). Rien n'est mergé.
+  Ouverture de PR : https://github.com/yaganperrot-hash/cv/pull/new/setup
+- **Le premier run de la CI n'a pas été vérifié depuis cette machine** (`gh`
+  absent) : à regarder dans l'onglet *Actions* du dépôt, en particulier l'étape
+  pandoc, la seule qui n'ait jamais tourné nulle part. → TODO-001.
 - La validation du téléphone est **française** uniquement.
 - Un seul CV par exécution (lot de CV → TASK-002).
 
 ## Prochaines étapes
 
-1. Créer le dépôt distant et pousser `main` puis `setup` (TODO-001).
-2. Relire la branche `setup` puis la merger dans `main` (le merge est laissé à
+1. Vérifier le premier run de `check-cv` dans l'onglet *Actions* (TODO-001).
+2. Relire la PR `setup` → `main` puis la merger (le merge est laissé à
    l'humain, comme demandé).
-3. Vérifier le premier run de `check-cv` une fois le push fait.
-4. TASK-001 (mise en forme du `.docx`), TASK-002 (vérification d'un lot de CV).
+3. TASK-001 (mise en forme du `.docx`), TASK-002 (vérification d'un lot de CV).
 
 ## Questions en attente pour le mainteneur
 
