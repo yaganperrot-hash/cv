@@ -28,7 +28,8 @@ validé), sections Formation / Expérience / Compétences, rythme d'alternance
 | Config | `config.yml` — **source de vérité des champs attendus** |
 | Format CV | Markdown, sections en titres `##` |
 | Export | pandoc, Markdown → `.docx` (fait en CI) |
-| CI | `.github/workflows/check-cv.yml` (push + pull_request) |
+| CI | `.github/workflows/check-cv.yml` + `.gitlab-ci.yml` |
+| Sujet | `tasks/TASK-003-sujet-pro-intg.md` — énoncé distribué aux étudiants |
 
 Règles de code :
 
@@ -68,7 +69,9 @@ sessions/              mémoire de travail entre sessions
 todos/                 travail à faire
 tasks/                 spécifications de lots de travail
 bugs/                  bugs ouverts et résolus
-.github/workflows/     CI
+.github/workflows/     CI GitHub Actions
+.gitlab-ci.yml         CI GitLab
+ci/                    scripts helpers pour la CI GitLab
 ```
 
 ### Où ranger quoi
