@@ -16,19 +16,18 @@ _(rien)_
 
 ## Bloquées
 
-- [ ] (P1) TODO-007 — Merger la PR `setup` → `main`. **Bloquée** : relecture
-      humaine explicitement demandée, aucun merge automatique.
-      https://github.com/yaganperrot-hash/cv/pull/new/setup
+_(rien)_
 
 ## Terminées (à archiver)
 
 - [x] TODO-001 — CI GitHub Actions vérifiée (5 runs success).
 - [x] TODO-002 — Supprimée (pandoc retiré, le .docx sera fait par l'étudiant).
-- [x] TODO-008 — Tests du rendu console ajoutés (7 tests).
+- [x] TODO-003 — TASK-002 : mode batch (dossier + multi-fichiers).
 - [x] TODO-004 — ruff ajouté (lint + format + CI).
 - [x] TODO-005 — Téléphones internationaux supportés.
 - [x] TODO-006 — `--json` ajouté à la CLI.
-- [x] TODO-003 — TASK-002 : mode batch (dossier + multi-fichiers).
+- [x] TODO-007 — PR `setup` → `main` mergée.
+- [x] TODO-008 — Tests du rendu console ajoutés (7 tests).
 
 ## Questions ouvertes
 
