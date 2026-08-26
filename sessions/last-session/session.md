@@ -20,6 +20,13 @@
    disponibilité manquants), formats, config invalide, codes de sortie, rapports.
 6. **CI** : `.github/workflows/check-cv.yml` — check, pytest, pandoc → `.docx`,
    artefacts `cv-docx` et `cv-report`.
+7. **Rapports versionnés** : `reports/` est sorti du `.gitignore`. Les rapports
+   des trois CV fictifs y sont committés, lisibles en pull request sans passer
+   par les artefacts de CI. `reports/README.md` donne la commande de
+   régénération et interdit d'y déposer le rapport d'un CV réel.
+8. **Deux bugs trouvés et corrigés** en cours de route : BUG-001 (`.gitignore`,
+   commentaire en fin de ligne) et BUG-002 (affichage de l'aide en console),
+   tous deux archivés dans `bugs/archive/`.
 
 ## Vérifications passées en local
 
@@ -29,6 +36,8 @@ python check_cv.py templates/cv-template.md       → 8/8, exit 0
 python check_cv.py tests/fixtures/cv-incomplet.md → 1/8, exit 1
 python check_cv.py tests/fixtures/cv-partiel.md   → 5/8, exit 1
 ```
+
+Rapports régénérés dans `reports/` après ces exécutions.
 
 ## Décisions prises (et pourquoi)
 
@@ -58,16 +67,21 @@ python check_cv.py tests/fixtures/cv-partiel.md   → 5/8, exit 1
 - **La conversion pandoc n'a pas pu être testée en local** (pandoc absent de la
   machine). La commande et le workflow sont écrits mais leur premier vrai
   passage aura lieu au premier push GitHub. → TODO-001.
-- Le workflow n'a jamais tourné : aucun remote n'est configuré.
+- **Rien n'a été poussé** : le dépôt n'a aucun remote et `gh` n'est pas installé
+  sur la machine. Les 15 commits n'existent qu'en local, sur `setup`. Dès que
+  l'URL du dépôt distant est connue :
+  `git remote add origin <url> && git push -u origin main setup`.
+- Le workflow n'a donc jamais tourné.
 - La validation du téléphone est **française** uniquement.
 - Un seul CV par exécution (lot de CV → TASK-002).
 
 ## Prochaines étapes
 
-1. Relire la branche `setup` puis la merger dans `main` (le merge est laissé à
+1. Créer le dépôt distant et pousser `main` puis `setup` (TODO-001).
+2. Relire la branche `setup` puis la merger dans `main` (le merge est laissé à
    l'humain, comme demandé).
-2. Pousser sur GitHub et vérifier le premier run de `check-cv` (TODO-001).
-3. TASK-001 (mise en forme du `.docx`), TASK-002 (vérification d'un lot de CV).
+3. Vérifier le premier run de `check-cv` une fois le push fait.
+4. TASK-001 (mise en forme du `.docx`), TASK-002 (vérification d'un lot de CV).
 
 ## Questions en attente pour le mainteneur
 

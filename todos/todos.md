@@ -3,7 +3,7 @@
 > Convention : une ligne = une todo. Format `- [ ] (P1) TODO-000 — description`.
 > Priorités : P1 (bloquant), P2 (important), P3 (confort).
 > Une todo terminée part dans `todos/archive/YYYY-MM-DD-titre.md`.
-> Dernière mise à jour : 2026-08-26.
+> Dernière mise à jour : 2026-08-26 (fin de session).
 
 ## En cours
 
@@ -13,7 +13,11 @@ _(rien — la branche `setup` attend sa relecture)_
 
 - [ ] (P1) TODO-001 — Pousser sur GitHub et vérifier le premier run du workflow
       `check-cv` : la conversion pandoc n'a jamais tourné (pandoc absent de la
-      machine de dev).
+      machine de dev). **Bloquée sur l'URL du dépôt distant** : aucun remote
+      n'est configuré et `gh` n'est pas installé sur la machine.
+- [ ] (P3) TODO-008 — Tester la *forme* du rendu console (bloc d'aide replié,
+      flèche uniquement sur la première ligne) : BUG-002 est passé entre les
+      mailles parce que les tests ne vérifiaient que la présence des libellés.
 - [ ] (P2) TODO-002 — TASK-001 : mise en forme du `.docx` via
       `--reference-doc=templates/reference.docx`, sans casser la lisibilité ATS.
 - [ ] (P2) TODO-003 — TASK-002 : accepter un dossier de CV (`python check_cv.py

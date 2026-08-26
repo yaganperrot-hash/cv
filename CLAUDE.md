@@ -61,7 +61,9 @@ config.yml             champs minimum attendus
 check_cv.py            point d'entrée CLI
 cv_checker/            le code du vérificateur
 templates/             CV modèle (fictif) qui passe le check
-tests/                 pytest + fixtures fictives
+tests/                 pytest + fixtures fictives (CV de test)
+reports/               rapports de vérification des CV fictifs (versionnés)
+data/                  CV réels, **ignoré par git** (RGPD)
 sessions/              mémoire de travail entre sessions
 todos/                 travail à faire
 tasks/                 spécifications de lots de travail
@@ -79,6 +81,10 @@ bugs/                  bugs ouverts et résolus
 | Un lot de travail à spécifier avant de coder | `tasks/TASK-000-titre.md` |
 | Un comportement cassé | `bugs/bugs.md` |
 | Un bug réparé | `bugs/archive/YYYY-MM-DD-BUG-000-titre.md` |
+| Un **CV de test fictif** | `tests/fixtures/cv-<cas>.md`, couvert par un test |
+| Un **CV réel** d'étudiant | `data/`, ignoré par git — jamais committé |
+| Le rapport d'un CV **fictif** | `reports/<nom-du-cv>-report.md` |
+| Le rapport d'un CV **réel** | nulle part dans le dépôt : il contient ses coordonnées |
 
 ### Conventions de nommage
 
@@ -94,6 +100,7 @@ bugs/                  bugs ouverts et résolus
 ### Rituel de fin de session
 
 1. Faire tourner `pytest` et le check sur le template : tout doit être vert.
+   Régénérer `reports/` si `config.yml`, le template ou une fixture a bougé.
 2. Mettre à jour `sessions/last-session/session.md` avec l'état **réel**
    (ce qui marche, ce qui ne marche pas, la prochaine étape).
 3. Déplacer les todos terminées dans `todos/archive/YYYY-MM-DD-titre.md`,
@@ -118,6 +125,8 @@ bugs/                  bugs ouverts et résolus
    template casse la CI de tout le monde.
 4. **Toute évolution des champs attendus passe par `config.yml`** et par un test
    qui la couvre.
+   Un CV de test ajouté au dépôt est fictif, vit dans `tests/fixtures/` et
+   arrive avec le test qui le couvre — sinon c'est un fichier mort.
 5. Ce qui a été décidé se note (`sessions/`), ce qui reste à faire se note
    (`todos/`), ce qui est cassé se note (`bugs/`). Une session qui ne laisse pas
    de trace fait perdre du temps à la suivante.
@@ -132,4 +141,10 @@ python check_cv.py templates/cv-template.md              # vérifie le template
 python check_cv.py data/mon-cv.md --report reports/cv.md # vérifie + artefact
 pytest                                                    # suite de tests
 pandoc templates/cv-template.md -o dist/cv.docx --standalone  # export .docx
+
+# Régénérer les rapports versionnés des CV fictifs
+for cv in templates/cv-template.md tests/fixtures/*.md; do
+  python check_cv.py "$cv" --no-color --quiet \
+    --report "reports/$(basename "${cv%.md}")-report.md"
+done
 ```
