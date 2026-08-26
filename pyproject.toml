@@ -1,0 +1,6 @@
+[tool.pytest.ini_options]
+# `pythonpath` permet d'importer `cv_checker` sans installation ni bidouille
+# de sys.path dans les tests.
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"
