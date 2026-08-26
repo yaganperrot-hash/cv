@@ -1,0 +1,54 @@
+name: check-cv
+
+# Le CV est vérifié à chaque push et à chaque pull request : une PR qui
+# oublie un champ minimum passe au rouge et ne peut pas être mergée.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  CV_PATH: templates/cv-template.md
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  check:
+    name: Champs minimum et tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupération du dépôt
+        uses: actions/checkout@v4
+
+      - name: Installation de Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Installation des dépendances
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint (ruff)
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Vérification des champs minimum
+        run: |
+          python check_cv.py "$CV_PATH" --config config.yml \
+            --report "reports/$(basename "${CV_PATH%.md}")-report.md" --no-color
+
+      - name: Tests (pytest)
+        run: pytest
+
+      - name: Publication du rapport de vérification
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-report
+          path: reports/*-report.md
+          if-no-files-found: warn
