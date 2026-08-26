@@ -3,6 +3,7 @@
 #
 # Ce fichier est la SOURCE DE VÉRITÉ : le script ne code aucun champ en dur.
 # Ajouter / retirer / assouplir un critère = éditer ce fichier, pas le Python.
+# Test CI — premier run en conditions réelles (2026-08-26)
 #
 # Types de champ :
 #   heading  : un titre de niveau `level` doit exister et matcher `pattern`
