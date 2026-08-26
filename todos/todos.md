@@ -15,6 +15,9 @@ _(rien — la branche `setup` attend sa relecture)_
       l'onglet *Actions* : la conversion pandoc n'a jamais tourné en local
       (pandoc absent de la machine de dev). Le push est fait, la CI a donc
       démarré.
+- [ ] (P1) TODO-009 — Tester le pipeline GitLab CI au premier push sur le
+      GitLab auto-hébergé. Vérifier que le commentaire se poste sur le commit
+      et que le `.docx` est téléchargeable en artefact.
 - [ ] (P3) TODO-008 — Tester la *forme* du rendu console (bloc d'aide replié,
       flèche uniquement sur la première ligne) : BUG-002 est passé entre les
       mailles parce que les tests ne vérifiaient que la présence des libellés.

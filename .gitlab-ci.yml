@@ -1,0 +1,63 @@
+# Pipeline GitLab CI pour la verification des CV Markdown.
+# Detecte automatiquement le CV a la racine, verifie les champs minimum,
+# poste un commentaire sur le commit avec le recap, et genere un .docx.
+
+stages:
+  - check
+  - build
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache"
+
+# ---------- Stage 1 : verification des champs minimum ----------
+
+verify-cv:
+  stage: check
+  image: python:3.12-slim
+  cache:
+    paths:
+      - .pip-cache/
+  script:
+    # Detecter le CV
+    - CV_PATH=$(bash ci/find-cv.sh)
+    - echo "CV detecte -> $CV_PATH"
+
+    # Installer les dependances
+    - pip install --quiet -r requirements.txt
+
+    # Verifier les champs minimum
+    - REPORT_FILE="reports/$(basename "${CV_PATH%.md}")-report.md"
+    - python check_cv.py "$CV_PATH" --config config.yml --report "$REPORT_FILE" --no-color || CV_CHECK_FAILED=1
+
+    # Poster le rapport en commentaire sur le commit
+    - bash ci/post-comment.sh "$REPORT_FILE" || echo "Le commentaire n'a pas pu etre poste (non bloquant)."
+
+    # Echouer le job si le check a echoue
+    - if [ "${CV_CHECK_FAILED:-0}" = "1" ]; then exit 1; fi
+  artifacts:
+    paths:
+      - reports/*-report.md
+    when: always
+    expire_in: 30 days
+
+# ---------- Stage 2 : generation du .docx (si le check passe) ----------
+
+build-docx:
+  stage: build
+  image: pandoc/core:latest
+  needs:
+    - job: verify-cv
+      artifacts: false
+  script:
+    # Detecter le CV (meme logique)
+    - CV_PATH=$(bash ci/find-cv.sh)
+    - echo "CV detecte -> $CV_PATH"
+
+    # Generer le .docx
+    - mkdir -p dist
+    - pandoc "$CV_PATH" --from=markdown --to=docx --standalone --output="dist/$(basename "${CV_PATH%.md}").docx"
+    - ls -lh dist/
+  artifacts:
+    paths:
+      - dist/*.docx
+    expire_in: 30 days
