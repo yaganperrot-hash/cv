@@ -29,6 +29,19 @@ def test_incomplete_cv_fails_with_the_expected_fields(incomplete_path, config):
     assert {result.id for result in report.results if result.ok} == {"experience"}
 
 
+def test_partial_cv_fails_on_the_three_usual_omissions(partial_path, config):
+    """Le cas réaliste : un CV correct auquel il manque les oublis classiques."""
+    report = check_file(partial_path, config)
+    assert report.exit_code == 1
+    assert {result.id for result in report.missing} == {
+        "phone",
+        "rythme_alternance",
+        "disponibilite",
+    }
+    rythme = next(r for r in report.results if r.id == "rythme_alternance")
+    assert [sub.id for sub in rythme.sub_results if not sub.ok] == ["elearning"]
+
+
 def test_every_missing_field_carries_a_help_message(incomplete_path, config):
     report = check_file(incomplete_path, config)
     for result in report.missing:

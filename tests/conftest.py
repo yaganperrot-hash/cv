@@ -31,3 +31,9 @@ def template_path() -> Path:
 @pytest.fixture(scope="session")
 def incomplete_path() -> Path:
     return FIXTURES / "cv-incomplet.md"
+
+
+@pytest.fixture(scope="session")
+def partial_path() -> Path:
+    """CV crédible mais amputé des trois oublis les plus fréquents."""
+    return FIXTURES / "cv-partiel.md"
