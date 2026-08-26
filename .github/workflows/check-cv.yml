@@ -1,0 +1,74 @@
+name: check-cv
+
+# Le CV est vérifié à chaque push et à chaque pull request : une PR qui
+# oublie un champ minimum passe au rouge et ne peut pas être mergée.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  # CV vérifié et converti. Un étudiant qui versionne son propre CV
+  # (fictif ou personnel, dans SON dépôt) change cette valeur.
+  CV_PATH: templates/cv-template.md
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  check:
+    name: Champs minimum, tests et export .docx
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupération du dépôt
+        uses: actions/checkout@v4
+
+      - name: Installation de Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Installation des dépendances
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Vérification des champs minimum
+        run: |
+          python check_cv.py "$CV_PATH" --config config.yml \
+            --report reports/cv-report.md --no-color
+
+      - name: Tests (pytest)
+        run: pytest
+
+      - name: Installation de pandoc
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends pandoc
+
+      - name: Conversion Markdown -> .docx (ATS-friendly)
+        run: |
+          mkdir -p dist
+          pandoc "$CV_PATH" \
+            --from=markdown \
+            --to=docx \
+            --standalone \
+            --output="dist/$(basename "${CV_PATH%.md}").docx"
+          ls -lh dist
+
+      - name: Publication du .docx
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-docx
+          path: dist/*.docx
+          if-no-files-found: error
+
+      - name: Publication du rapport de vérification
+        # `always()` : le rapport est justement le plus utile quand le check échoue.
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-report
+          path: reports/cv-report.md
+          if-no-files-found: warn
