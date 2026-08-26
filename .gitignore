@@ -1,0 +1,45 @@
+# ---------------------------------------------------------------------------
+# RGPD — aucun CV réel d'étudiant ne doit être versionné.
+# Seuls templates/cv-template.md et les fixtures fictives de tests/ le sont.
+# ---------------------------------------------------------------------------
+data/
+cv-reels/
+*.pdf
+*.docx
+!templates/*.docx          # exception : un éventuel reference.docx de mise en page
+
+# Artefacts générés (conversion pandoc, rapports de check)
+dist/
+build/
+reports/
+*.report.md
+*.report.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# Config locale / secrets
+config.local.yml
+config.local.yaml
+.env
+.env.*
+!.env.example
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
