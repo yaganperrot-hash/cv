@@ -82,16 +82,18 @@ def render_console(report: Report, color: bool = False) -> str:
 
 
 def _detail_lines(result: FieldResult, palette: _Palette) -> list[str]:
-    if result.ok:
+    """Le message d'aide, sous le champ manquant.
+
+    Les sous-règles manquantes ne sont pas répétées ici : `detail` les
+    énumère déjà.
+    """
+    if result.ok or not result.help:
         return []
-    lines = []
-    for sub in result.sub_results:
-        if not sub.ok:
-            lines.append(palette.dim(f"        - manque : {sub.label}"))
-    if result.help:
-        for paragraph in _wrap(result.help, 80):
-            lines.append(palette.yellow(f"        -> {paragraph}"))
-    return lines
+    # Seule la première ligne porte la flèche ; les suivantes s'alignent dessous.
+    return [
+        palette.yellow(f"        {'->' if index == 0 else '  '} {line}")
+        for index, line in enumerate(_wrap(result.help, 76))
+    ]
 
 
 def _wrap(text: str, width: int) -> list[str]:
